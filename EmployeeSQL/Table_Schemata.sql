@@ -1,11 +1,18 @@
--- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
+﻿-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
 
---Create tables 
+CREATE TABLE "titles" (
+    "title_id" varchar   NOT NULL,
+    "title" varchar   NOT NULL,
+    CONSTRAINT "pk_titles" PRIMARY KEY (
+        "title_id"
+     )
+);
+
 CREATE TABLE "employees" (
     "emp_no" int   NOT NULL,
     "emp_title_id" varchar   NOT NULL,
-    "birth_date" date   NOT NULL,
+    "bi_date" date   NOT NULL,
     "first_name" varchar   NOT NULL,
     "last_name" varchar   NOT NULL,
     "sex" varchar   NOT NULL,
@@ -23,31 +30,30 @@ CREATE TABLE "departments" (
      )
 );
 
-CREATE TABLE "titles" (
-    "title_id" varchar   NOT NULL,
-    "title" varchar   NOT NULL,
-    CONSTRAINT "pk_titles" PRIMARY KEY (
-        "title_id"
-     )
-);
-
 CREATE TABLE "dept_emp" (
     "emp_no" int   NOT NULL,
     "dept_no" varchar   NOT NULL,
-	PRIMARY KEY(emp_no, dept_no)
+    CONSTRAINT "pk_dept_emp" PRIMARY KEY (
+        "emp_no","dept_no"
+     )
 );
-
+Drop table dept_manager
 CREATE TABLE "dept_manager" (
     "dept_no" varchar   NOT NULL,
-    "emp_no" int   NOT NULL
+    "emp_no" int   NOT NULL,
+    CONSTRAINT "pk_dept_manager" PRIMARY KEY (
+        "emp_no"
+     )
 );
 
 CREATE TABLE "salaries" (
     "emp_no" int   NOT NULL,
-    "salary" int   NOT NULL
+    "salary" int   NOT NULL,
+    CONSTRAINT "pk_salaries" PRIMARY KEY (
+        "emp_no"
+     )
 );
 
---Add foreign key restraints
 ALTER TABLE "employees" ADD CONSTRAINT "fk_employees_emp_title_id" FOREIGN KEY("emp_title_id")
 REFERENCES "titles" ("title_id");
 
@@ -66,28 +72,4 @@ REFERENCES "employees" ("emp_no");
 ALTER TABLE "salaries" ADD CONSTRAINT "fk_salaries_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
 
--- check for uniqueness of keys in the 6 tables
 
---No composite key needed
-select count(distinct emp_no), count(emp_no)
-from employees;
-
---No composite key needed
-select count(distinct dept_no), count(dept_no)
-from departments;
-
---No composite key needed
-select count(distinct title_id), count(title_id)
-from titles;
-
---**dept_emp contains emp_no that are assigned to multiple dept_no. Needs composite key.**
-select count(distinct emp_no), count(emp_no)
-from dept_emp;
-
---No composite key needed
-select count(distinct emp_no), count(emp_no)
-from dept_manager;
-
---No composite key needed
-select count(distinct emp_no), count(emp_no)
-from salaries;

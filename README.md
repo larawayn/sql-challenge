@@ -1,7 +1,7 @@
 # University of Denver Data Analytics Boot Camp: SQL Homework - Employee Database: A Mystery in Two Parts
 # 
 
-![sql.png](sql.png)
+![sql.png](EmployeeSQL/images/sql.png)
 
 
 ## Background
@@ -33,7 +33,7 @@ Inspect the CSVs and sketch out an ERD of the tables. Feel free to use a tool li
   * Be sure to create tables in the correct order to handle foreign keys.
 
 * Import each CSV file into the corresponding SQL table. **Note** be sure to import the data in the same order that the tables were created and account for the headers when importing to avoid errors.
-* Files can
+
 
 ### Data Analysis
 
